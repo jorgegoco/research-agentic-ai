@@ -5,10 +5,10 @@ This repo includes a Docker setup that runs **Postgres + the API in one containe
 
 ## Features
 
-* `/` serves a simple UI (Jinja2 template) to kick off a research task.
-* `/generate_report` kicks off a threaded, multi-step agent workflow (planner → research/writer/editor).
-* `/task_progress/{task_id}` live status for each step/substep.
-* `/task_status/{task_id}` final status + report.
+- `/` serves a simple UI (Jinja2 template) to kick off a research task.
+- `/generate_report` kicks off a threaded, multi-step agent workflow (planner → research/writer/editor).
+- `/task_progress/{task_id}` live status for each step/substep.
+- `/task_status/{task_id}` final status + report.
 
 ---
 
@@ -37,20 +37,19 @@ This repo includes a Docker setup that runs **Postgres + the API in one containe
 
 ## Prerequisites
 
-* **Docker** (Desktop on Windows/macOS, or engine on Linux).
+- **Docker** (Desktop on Windows/macOS, or engine on Linux).
 
-
-* API keys stored in a `.env` file:
+- API keys stored in a `.env` file:
 
   ```
   OPENAI_API_KEY=your-open-api-key
   TAVILY_API_KEY=your-tavily-api-key
   ```
 
-* Python deps are installed by Docker from `requirements.txt`:
+- Python deps are installed by Docker from `requirements.txt`:
 
-  * `fastapi`, `uvicorn`, `sqlalchemy`, `python-dotenv`, `jinja2`, `requests`, `wikipedia`, etc.
-  * Plus any libs used by your `aisuite` client.
+  - `fastapi`, `uvicorn`, `sqlalchemy`, `python-dotenv`, `jinja2`, `requests`, `wikipedia`, etc.
+  - Plus any libs used by your `aisuite` client.
 
 ---
 
@@ -58,20 +57,21 @@ This repo includes a Docker setup that runs **Postgres + the API in one containe
 
 The app **reads only `DATABASE_URL`** at startup.
 
-* The container’s entrypoint sets a sane default for local dev:
+- The container’s entrypoint sets a sane default for local dev:
 
   ```
   postgresql://app:local@127.0.0.1:5432/appdb
   ```
-* To use Tavily:
 
-  * Provide `TAVILY_API_KEY` (via `.env` or `-e`).
+- To use Tavily:
+
+  - Provide `TAVILY_API_KEY` (via `.env` or `-e`).
 
 Optional (if you want to override defaults done by the entrypoint):
 
-* `POSTGRES_USER` (default `app`)
-* `POSTGRES_PASSWORD` (default `local`)
-* `POSTGRES_DB` (default `appdb`)
+- `POSTGRES_USER` (default `app`)
+- `POSTGRES_PASSWORD` (default `local`)
+- `POSTGRES_DB` (default `appdb`)
 
 ---
 
@@ -102,8 +102,8 @@ INFO:     Uvicorn running on http://0.0.0.0:8000
 
 ### 3) Open the app
 
-* UI: [http://localhost:8000/](http://localhost:8000/)
-* Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+- UI: [http://localhost:8000/](http://localhost:8000/)
+- Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
@@ -136,12 +136,13 @@ curl http://localhost:8000/task_status/<TASK_ID>
 
 **I open [http://localhost:8000](http://localhost:8000) and see nothing / errors**
 
-* Confirm `templates/index.html` exists inside the container:
+- Confirm `templates/index.html` exists inside the container:
 
   ```bash
   docker exec -it fpsvc bash -lc "ls -l /app/templates && ls -l /app/static || true"
   ```
-* Watch logs while you load the page:
+
+- Watch logs while you load the page:
 
   ```bash
   docker logs -f fpsvc
@@ -149,7 +150,7 @@ curl http://localhost:8000/task_status/<TASK_ID>
 
 **Container asks for a Postgres password on startup**
 
-* The entrypoint uses **UNIX socket + peer auth** for admin tasks (no password).
+- The entrypoint uses **UNIX socket + peer auth** for admin tasks (no password).
   Ensure you’re not calling `psql -h 127.0.0.1 -U postgres` in the script—use:
 
   ```bash
@@ -158,7 +159,7 @@ curl http://localhost:8000/task_status/<TASK_ID>
 
 **`DATABASE_URL not set` error**
 
-* The entrypoint exports a default DSN. If you overrode it, ensure it’s valid:
+- The entrypoint exports a default DSN. If you overrode it, ensure it’s valid:
 
   ```
   postgresql://<user>:<password>@<host>:<port>/<database>
@@ -166,7 +167,7 @@ curl http://localhost:8000/task_status/<TASK_ID>
 
 **Tables disappear on restart**
 
-* In your `main.py` you call `Base.metadata.drop_all(...)` on startup.
+- In your `main.py` you call `Base.metadata.drop_all(...)` on startup.
   Comment it out or guard with an env flag:
 
   ```python
@@ -176,20 +177,21 @@ curl http://localhost:8000/task_status/<TASK_ID>
 
 **Tavily / arXiv / Wikipedia errors**
 
-* Provide `TAVILY_API_KEY` and ensure network access, provide in the root dir and `.env` file as follows:
+- Provide `TAVILY_API_KEY` and ensure network access, provide in the root dir and `.env` file as follows:
+
 ```
 # OpenAI API Key
 OPENAI_API_KEY=your-open-api-key
 TAVILY_API_KEY=your-tavily-api-key
 ```
 
-* Wikipedia rate limits sometimes; try later or handle exceptions gracefully.
+- Wikipedia rate limits sometimes; try later or handle exceptions gracefully.
 
 ---
 
 ## Development tips
 
-* **Hot reload** (optional): For dev, you can run Uvicorn with `--reload` if you mount your code:
+- **Hot reload** (optional): For dev, you can run Uvicorn with `--reload` if you mount your code:
 
   ```bash
   docker run --rm -it -p 8000:8000 -p 5432:5432 \
@@ -198,7 +200,7 @@ TAVILY_API_KEY=your-tavily-api-key
     bash -lc "pg_ctlcluster \$(psql -V | awk '{print \$3}' | cut -d. -f1) main start && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
   ```
 
-* **Connect to DB from host:**
+- **Connect to DB from host:**
 
   ```bash
   psql "postgresql://app:local@localhost:5432/appdb"
