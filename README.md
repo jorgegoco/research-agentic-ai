@@ -480,10 +480,29 @@ sequenceDiagram
 
 Direct access to PostgreSQL for advanced users.
 
+> **Note:** This application is designed to run in a Docker container with PostgreSQL bundled inside. You don't need PostgreSQL installed on your host system. The database is accessed through the running container.
+
 #### Connect to Database
 
+**Recommended: Access from inside the Docker container (no installation needed)**
+
 ```bash
-# From a new terminal (keep Docker container running)
+# Make sure the container is running
+docker ps
+
+# Connect to the database from inside the container
+docker exec -it fpsvc psql "postgresql://app:local@127.0.0.1:5432/appdb"
+```
+
+**Alternative: Install PostgreSQL client on host (optional)**
+
+If you prefer to connect from your WSL2/host terminal directly:
+
+```bash
+# Install PostgreSQL client tools only (not the full server)
+sudo apt update && sudo apt install -y postgresql-client
+
+# Connect from host (container must be running with port 5432 exposed)
 psql "postgresql://app:local@localhost:5432/appdb"
 ```
 
