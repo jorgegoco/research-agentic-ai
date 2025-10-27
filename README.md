@@ -1,4 +1,4 @@
-# 🧠 Reflective Research Agent
+# 📚 Reflective Research Agent
 
 > An AI-powered multi-agent system that autonomously conducts research, writes comprehensive academic reports, and provides real-time progress tracking.
 
@@ -24,6 +24,7 @@ A FastAPI web application that orchestrates intelligent agents to perform automa
 ## ✨ Features
 
 ### Core Capabilities
+
 - **🤖 Multi-Agent System**: Orchestrates planner, research, writer, and editor agents working in sequence
 - **🔍 Advanced Research Tools**:
   - Tavily web search for current information
@@ -36,6 +37,7 @@ A FastAPI web application that orchestrates intelligent agents to perform automa
 - **🔌 RESTful API**: Full API access for programmatic integration
 
 ### Agent Capabilities
+
 - **Planning Agent** (OpenAI o4-mini): Creates structured 6-7 step research plans
 - **Research Agent** (GPT-4.1-mini): Intelligently selects and uses multiple research tools
 - **Writer Agent** (GPT-4.1-mini): Drafts comprehensive academic reports with proper structure
@@ -102,6 +104,7 @@ graph TD
 ```
 
 ### Technology Stack
+
 - **Backend**: FastAPI + Uvicorn
 - **Database**: PostgreSQL 15/17
 - **AI Models**: OpenAI GPT-4.1-mini, o4-mini (via aisuite)
@@ -117,12 +120,14 @@ graph TD
 ### For First-Time Users
 
 **1. Clone and Navigate:**
+
 ```bash
 git clone <your-repo-url>
 cd research-agentic-ai
 ```
 
 **2. Create `.env` file:**
+
 ```bash
 cat > .env << EOF
 OPENAI_API_KEY=sk-your-openai-key-here
@@ -132,11 +137,13 @@ EOF
 ```
 
 **3. Build Docker Image:**
+
 ```bash
 docker build -t fastapi-postgres-service .
 ```
 
 **4. Run the Application:**
+
 ```bash
 docker run --rm -it \
   -p 8000:8000 \
@@ -147,6 +154,7 @@ docker run --rm -it \
 ```
 
 **5. Open in Browser:**
+
 - Navigate to: http://localhost:8000
 - Submit a research query and watch the magic happen! ✨
 
@@ -155,14 +163,17 @@ docker run --rm -it \
 ## 📋 Prerequisites
 
 ### Required
+
 - **Docker**: Docker Desktop (Windows/macOS) or Docker Engine (Linux/WSL2)
   - Installation: https://docs.docker.com/get-docker/
   - For WSL2 Ubuntu: `sudo apt-get install docker.io docker-compose`
 
 ### API Keys
+
 You'll need accounts and API keys from:
 
 1. **OpenAI** (https://platform.openai.com/api-keys)
+
    - Used for AI model access (GPT-4.1-mini, o4-mini)
    - Pricing: ~$0.15 per 1M input tokens
 
@@ -171,6 +182,7 @@ You'll need accounts and API keys from:
    - Free tier available
 
 ### System Requirements
+
 - **RAM**: 4GB minimum, 8GB recommended
 - **Disk Space**: ~2GB for Docker images
 - **Ports**: 8000 (FastAPI), 5432 (PostgreSQL) must be available
@@ -182,6 +194,7 @@ You'll need accounts and API keys from:
 ### Docker Setup (Recommended)
 
 **For WSL2 Ubuntu:**
+
 ```bash
 # Install Docker
 sudo apt-get update
@@ -202,12 +215,14 @@ docker ps
 ```
 
 **Build the Image:**
+
 ```bash
 cd /path/to/research-agentic-ai
 docker build -t fastapi-postgres-service .
 ```
 
 This process:
+
 - Downloads Python 3.11 base image
 - Installs PostgreSQL and system dependencies
 - Installs Python packages from requirements.txt
@@ -215,6 +230,7 @@ This process:
 - Takes 3-5 minutes on first build
 
 **Verify Build:**
+
 ```bash
 docker images
 # Should show: fastapi-postgres-service  latest  ...
@@ -239,6 +255,7 @@ docker images
 #### 2. Effective Prompt Examples
 
 **Example 1 - Technical Topic:**
+
 ```
 Large language models for code generation. Focus on approaches like Codex,
 AlphaCode, and CodeLlama. Include recent benchmarks on HumanEval and MBPP
@@ -246,6 +263,7 @@ datasets, and discuss fine-tuning techniques for domain-specific coding tasks.
 ```
 
 **Example 2 - Scientific Discovery:**
+
 ```
 Applications of deep learning in drug discovery, particularly in molecular
 property prediction and de novo drug design. Cover graph neural networks,
@@ -254,6 +272,7 @@ from 2023-2024.
 ```
 
 **Example 3 - Theoretical CS:**
+
 ```
 Recent advances in quantum computing algorithms for optimization problems.
 Include Grover's algorithm, quantum annealing, and QAOA. Compare performance
@@ -261,6 +280,7 @@ against classical algorithms and discuss current hardware limitations.
 ```
 
 **Example 4 - Interdisciplinary:**
+
 ```
 The role of AI in climate change modeling and prediction. Focus on machine
 learning applications in weather forecasting, climate pattern recognition,
@@ -270,6 +290,7 @@ and carbon emissions optimization. Include recent breakthroughs and limitations.
 #### 3. Monitor Progress
 
 The interface provides real-time updates on:
+
 - **Step Status**: pending → running → done/error
 - **Agent Activity**: Which agent is executing (Research/Writer/Editor)
 - **Tool Usage**: See which tools were called (Tavily, arXiv, Wikipedia)
@@ -282,7 +303,9 @@ The interface provides real-time updates on:
 #### 4. Download Reports
 
 Once complete:
+
 - **Markdown Format**: Click "⬇️ Download .md"
+
   - Plain text format with markdown syntax
   - Great for version control, editing, or conversion
 
@@ -291,6 +314,7 @@ Once complete:
   - Ready for web publishing
 
 Reports include:
+
 - Full academic structure (Abstract, Introduction, Methods, Results, Discussion, Conclusion)
 - Inline citations [1], [2], etc.
 - Complete References section with clickable links
@@ -312,6 +336,7 @@ curl -X POST http://localhost:8000/generate_report \
 ```
 
 **Response:**
+
 ```json
 {
   "task_id": "abc123-def456-ghi789"
@@ -325,6 +350,7 @@ curl http://localhost:8000/task_progress/abc123-def456-ghi789 | jq
 ```
 
 **Response Structure:**
+
 ```json
 {
   "steps": [
@@ -345,6 +371,7 @@ curl http://localhost:8000/task_status/abc123-def456-ghi789 | jq
 ```
 
 **Response:**
+
 ```json
 {
   "status": "done",
@@ -362,6 +389,7 @@ curl http://localhost:8000/api
 ```
 
 **Response:**
+
 ```json
 {
   "status": "ok"
@@ -371,6 +399,7 @@ curl http://localhost:8000/api
 #### 5. Interactive API Docs
 
 FastAPI provides automatic interactive documentation:
+
 - **Swagger UI**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
@@ -437,6 +466,7 @@ sequenceDiagram
 ```
 
 **Key Points:**
+
 - **Asynchronous Design**: The API returns immediately with a `task_id`, while research runs in the background
 - **Two Storage Layers**:
   - PostgreSQL for persistent task storage
@@ -510,14 +540,15 @@ erDiagram
 
 **Storage Strategy:**
 
-| Component | Storage Type | Purpose | Lifetime |
-|-----------|-------------|---------|----------|
-| **Tasks Table** | PostgreSQL | Persistent storage of task metadata and final reports | Permanent (unless manually deleted) |
-| **task_progress Dict** | In-Memory (Python dict) | Real-time progress tracking for active tasks | Process lifetime (lost on restart) |
+| Component              | Storage Type            | Purpose                                               | Lifetime                            |
+| ---------------------- | ----------------------- | ----------------------------------------------------- | ----------------------------------- |
+| **Tasks Table**        | PostgreSQL              | Persistent storage of task metadata and final reports | Permanent (unless manually deleted) |
+| **task_progress Dict** | In-Memory (Python dict) | Real-time progress tracking for active tasks          | Process lifetime (lost on restart)  |
 
 **Key Schema Details:**
 
 1. **Tasks Table** (`main.py:39-46`):
+
    - **id**: UUID generated by `uuid.uuid4()`
    - **prompt**: Original user query (TEXT, no length limit)
    - **status**: Current state (`running` → `done` or `error`)
@@ -536,6 +567,7 @@ erDiagram
    - Enables live progress tracking without DB overhead
 
 **Important Notes:**
+
 - ⚠️ **Database drops all tables on startup** by default (`main.py:50`)
 - To persist data between restarts, see [Customization → Persistent Database Storage](#1-persistent-database-storage)
 - In-memory progress is lost on container restart (fetch from `tasks.result` instead)
@@ -556,6 +588,7 @@ docker run --rm -it \
 ```
 
 **Expected Output:**
+
 ```
 🚀 Starting Postgres cluster 17/main...
 ✅ Postgres is ready
@@ -601,6 +634,7 @@ docker run --rm -it \
 ```
 
 **Benefits:**
+
 - Edit Python files and see changes immediately
 - No need to rebuild Docker image
 - Faster iteration during development
@@ -608,11 +642,13 @@ docker run --rm -it \
 ### Rebuild After Changes
 
 **When to rebuild:**
+
 - Modified `Dockerfile`
 - Updated `requirements.txt`
 - Changed `docker/entrypoint.sh`
 
 **How to rebuild:**
+
 ```bash
 docker build -t fastapi-postgres-service .
 ```
@@ -626,12 +662,14 @@ docker build -t fastapi-postgres-service .
 **Problem**: By default, database drops all tables on startup (main.py:50)
 
 **Solution**: Comment out the drop statement in `main.py`:
+
 ```python
 # Base.metadata.drop_all(bind=engine)  # Comment this line
 Base.metadata.create_all(bind=engine)
 ```
 
 Then rebuild:
+
 ```bash
 docker build -t fastapi-postgres-service .
 ```
@@ -648,6 +686,7 @@ _TEXT_CHARS = 10000        # Increase for more text (default: 5000)
 ```
 
 **Trade-offs:**
+
 - More pages/chars = Better context but slower execution
 - Fewer pages/chars = Faster but may miss important details
 
@@ -656,11 +695,13 @@ _TEXT_CHARS = 10000        # Increase for more text (default: 5000)
 The system uses `aisuite` for unified model access.
 
 **Planning Agent** (src/planning_agent.py:27):
+
 ```python
 def planner_agent(topic: str, model: str = "openai:o4-mini"):
 ```
 
 **Research/Writer/Editor Agents** (src/agents.py):
+
 ```python
 def research_agent(prompt: str, model: str = "openai:gpt-4.1-mini", ...):
 def writer_agent(prompt: str, model: str = "openai:gpt-4.1-mini", ...):
@@ -668,6 +709,7 @@ def editor_agent(prompt: str, model: str = "openai:gpt-4.1-mini", ...):
 ```
 
 **Available Models:**
+
 ```python
 # OpenAI
 "openai:gpt-4o"           # Most capable
@@ -699,6 +741,7 @@ def editor_agent(prompt: str, model: str = "openai:gpt-4.1-mini", ...):
 **Error**: `address already in use`
 
 **Solution:**
+
 ```bash
 sudo lsof -i :8000
 sudo kill -9 <PID>
@@ -709,6 +752,7 @@ sudo kill -9 <PID>
 **Symptom**: `TAVILY_API_KEY not found`
 
 **Solution:**
+
 1. Verify `.env` file exists
 2. Check keys have no quotes
 3. Restart container with `--env-file .env`
@@ -716,6 +760,7 @@ sudo kill -9 <PID>
 ### Out of Memory
 
 **Solutions:**
+
 - Reduce PDF extraction pages/chars in `src/research_tools.py`
 - Use shorter prompts
 - Increase Docker memory allocation
@@ -752,22 +797,26 @@ research-agentic-ai/
 ### Key Files
 
 **`main.py`** (232 lines)
+
 - FastAPI initialization
 - Database model (Task table)
 - API endpoints
 - Background workflow execution
 
 **`src/planning_agent.py`** (177 lines)
+
 - OpenAI o4-mini planning
 - Workflow enforcement
 - Maximum 7 steps
 
 **`src/agents.py`** (297 lines)
+
 - Research agent with tool calling
 - Writer agent (1500-3000 word reports)
 - Editor agent (quality improvement)
 
 **`src/research_tools.py`** (408 lines)
+
 - arXiv: PDF download + text extraction
 - Tavily: Web search
 - Wikipedia: Article summaries
@@ -805,4 +854,4 @@ curl -X POST http://localhost:8000/generate_report \
 
 **Happy Researching! 🧠✨**
 
-*Built with FastAPI, PostgreSQL, OpenAI, and Docker*
+_Built with FastAPI, PostgreSQL, OpenAI, and Docker_

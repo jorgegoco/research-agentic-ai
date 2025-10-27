@@ -93,9 +93,9 @@ def _safe_filename(name: str) -> str:
 
 def clean_text(s: str) -> str:
     s = re.sub(r"-\n", "", s)  # "transfor-\nmers" -> "transformers"
-    s = re.sub(r"\r\n|\r", "\n", s)  # normaliza saltos
-    s = re.sub(r"[ \t]+", " ", s)  # colapsa espacios
-    s = re.sub(r"\n{3,}", "\n\n", s)  # no más de 1 línea en blanco seguida
+    s = re.sub(r"\r\n|\r", "\n", s)  # normalize line breaks
+    s = re.sub(r"[ \t]+", " ", s)  # collapse spaces
+    s = re.sub(r"\n{3,}", "\n\n", s)  # no more than 1 blank line in a row
     return s.strip()
 
 
@@ -154,8 +154,8 @@ def arxiv_search_tool(
     max_results: int = 3,
 ) -> List[Dict]:
     """
-    Busca en arXiv y devuelve resultados con `summary` sobrescrito
-    para contener el texto extraído del PDF (full_text si es posible).
+    Searches arXiv and returns results with `summary` overwritten
+    to contain extracted PDF text (full_text if possible).
     """
     # ===== FLAGS INTERNOS =====
     _INCLUDE_PDF = True

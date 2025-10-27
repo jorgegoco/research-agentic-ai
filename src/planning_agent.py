@@ -142,7 +142,7 @@ def executor_agent_step(step_title: str, history: list, prompt: str):
         - output (str)
     """
 
-    # Construir contexto enriquecido estructurado
+    # Build enriched structured context
     context = f"📘 User Prompt:\n{prompt}\n\n📜 History so far:\n"
     for i, (desc, agent, output) in enumerate(history):
         if "draft" in desc.lower() or agent == "writer_agent":
@@ -160,7 +160,7 @@ def executor_agent_step(step_title: str, history: list, prompt: str):
 {step_title}
 """
 
-    # Seleccionar agente basado en el paso
+    # Select agent based on the step
     step_lower = step_title.lower()
     if "research" in step_lower:
         content, _ = research_agent(prompt=enriched_task)
